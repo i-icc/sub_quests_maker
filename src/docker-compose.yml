@@ -14,21 +14,6 @@ services:
     #   - db
     tty: true
     stdin_open: true
-    
-
-  # frontend:
-  #   build: ./frontend
-  #   container_name: frontend_container
-  #   depends_on:
-  #     - backend
-  #   ports:
-  #     - 8000:8000
-  #   environment:
-  #     TZ: "Asia/Tokyo"
-  #   volumes:
-  #     - ./frontend:/app:rw
-  #   tty: true
-  #   stdin_open: true
 
   # db:
   #   image: mysql:5.7

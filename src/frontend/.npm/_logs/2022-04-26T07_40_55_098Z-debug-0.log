@@ -1,0 +1,55 @@
+0 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
+1 info using npm@8.5.2
+2 info using node@v17.7.2
+3 timing npm:load:whichnode Completed in 0ms
+4 timing config:load:defaults Completed in 1ms
+5 timing config:load:file:/usr/local/lib/node_modules/npm/npmrc Completed in 0ms
+6 timing config:load:builtin Completed in 1ms
+7 timing config:load:cli Completed in 3ms
+8 timing config:load:env Completed in 1ms
+9 timing config:load:project Completed in 15ms
+10 timing config:load:file:/app/.npmrc Completed in 3ms
+11 timing config:load:user Completed in 3ms
+12 timing config:load:file:/usr/local/etc/npmrc Completed in 0ms
+13 timing config:load:global Completed in 0ms
+14 timing config:load:validate Completed in 0ms
+15 timing config:load:credentials Completed in 2ms
+16 timing config:load:setEnvs Completed in 0ms
+17 timing config:load Completed in 27ms
+18 timing npm:load:configload Completed in 27ms
+19 timing npm:load:setTitle Completed in 0ms
+20 timing config:load:flatten Completed in 2ms
+21 timing npm:load:display Completed in 5ms
+22 verbose logfile /app/.npm/_logs/2022-04-26T07_40_55_098Z-debug-0.log
+23 timing npm:load:logFile Completed in 99ms
+24 timing npm:load:timers Completed in 0ms
+25 timing npm:load:configScope Completed in 0ms
+26 timing npm:load Completed in 138ms
+27 http fetch GET 200 https://registry.npmjs.org/npm 682ms (cache miss)
+28 timing command:run-script Completed in 270457ms
+29 timing command:start Completed in 270473ms
+30 notice
+30 notice New [33mminor[39m version of npm available! [31m8.5.2[39m -> [32m8.7.0[39m
+30 notice Changelog: [36mhttps://github.com/npm/cli/releases/tag/v8.7.0[39m
+30 notice Run [32mnpm install -g npm@8.7.0[39m to update!
+30 notice
+31 verbose stack Error: command failed
+31 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/@npmcli/promise-spawn/index.js:64:27)
+31 verbose stack     at ChildProcess.emit (node:events:527:28)
+31 verbose stack     at maybeClose (node:internal/child_process:1090:16)
+31 verbose stack     at Process.ChildProcess._handle.onexit (node:internal/child_process:302:5)
+32 verbose pkgid frontend1@0.1.0
+33 verbose cwd /app
+34 verbose Linux 5.10.47-linuxkit
+35 verbose argv "/usr/local/bin/node" "/usr/local/bin/npm" "start"
+36 verbose node v17.7.2
+37 verbose npm  v8.5.2
+38 error path /app
+39 error command failed
+40 error signal SIGTERM
+41 error command sh -c react-scripts start
+42 verbose exit 1
+43 timing npm Completed in 271035ms
+44 verbose code 1
+45 error A complete log of this run can be found in:
+45 error     /app/.npm/_logs/2022-04-26T07_40_55_098Z-debug-0.log
