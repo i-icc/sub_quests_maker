@@ -9,35 +9,37 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./backend:/app
-    depends_on:
-      - db
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+      - ./backend:/backend
+    # depends_on:
+    #   - db
     tty: true
+    stdin_open: true
     
 
-  frontend:
-    build: ./frontend
-    container_name: frontend_container
-    depends_on:
-      - backend
-    ports:
-      - 8080:3000
-    environment:
-      TZ: "Asia/Tokyo"
-    volumes:
-      - ./frontend:/app:rw
-    command: yarn run dev
-    tty: true
+  # frontend:
+  #   build: ./frontend
+  #   container_name: frontend_container
+  #   depends_on:
+  #     - backend
+  #   ports:
+  #     - 8000:8000
+  #   environment:
+  #     TZ: "Asia/Tokyo"
+  #   volumes:
+  #     - ./frontend:/app:rw
+  #   tty: true
+  #   stdin_open: true
 
-  db:
-    image: mysql:5.7
-    platform: linux/amd64
-    container_name: db_container
-    volumes:
-      - ./mysql:/var/lib/mysql
-    env_file:
-      - .env
+  # db:
+  #   image: mysql:5.7
+  #   platform: linux/amd64
+  #   container_name: db_container
+  #   ports:
+  #     - 3306:3306
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
+  #   env_file:
+  #     - .env
 
 volumes:
   mysql:
