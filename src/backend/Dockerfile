@@ -1,18 +1,18 @@
-FROM ruby:2.7
-RUN apt-get update -qq && apt-get install -y nodejs yarnpkg
-RUN ln -s /usr/bin/yarnpkg /usr/bin/yarn
-RUN mkdir /app
-WORKDIR /app
-COPY Gemfile /app/Gemfile
-COPY Gemfile.lock /app/Gemfile.lock
-RUN bundle install
-COPY . /app
+FROM golang:latest
 
-# Add a script to be executed every time the container starts.
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
-EXPOSE 3000
+RUN apt-get update && apt-get install -y vim
+ENV HOME="/backend"
+ENV GOPATH=/usr
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
 
-# Start the main process.
-CMD ["rails", "server", "-b", "0.0.0.0"]
+RUN mkdir -p ${HOME}
+WORKDIR ${HOME}
+COPY go.mod .
+RUN go mod download
+RUN go mod tidy
+COPY . ${HOME}
+
+CMD [ "go", "run", "server.go" ]
