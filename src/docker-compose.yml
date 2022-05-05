@@ -16,22 +16,14 @@ services:
     stdin_open: true
 
   db:
-<<<<<<< HEAD
-    image: mysql:5.7
-=======
     image: mysql:8.0
->>>>>>> setup
     platform: linux/amd64
     container_name: db_container
     ports:
       - 3306:3306
     volumes:
-<<<<<<< HEAD
-      - ./mysql:/var/lib/mysql
-=======
       - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
->>>>>>> setup
     env_file:
       - .env
 
