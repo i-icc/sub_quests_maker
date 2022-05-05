@@ -10,21 +10,22 @@ services:
       - "3000:3000"
     volumes:
       - ./backend:/backend
-    # depends_on:
-    #   - db
+    depends_on:
+      - db
     tty: true
     stdin_open: true
 
-  # db:
-  #   image: mysql:5.7
-  #   platform: linux/amd64
-  #   container_name: db_container
-  #   ports:
-  #     - 3306:3306
-  #   volumes:
-  #     - ./mysql:/var/lib/mysql
-  #   env_file:
-  #     - .env
+  db:
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: db_container
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    env_file:
+      - .env
 
 volumes:
   mysql:
