@@ -15,4 +15,4 @@ RUN go mod download
 RUN go mod tidy
 COPY . ${HOME}
 
-CMD [ "go", "run", "server.go" ]
+CMD [ "go", "run", "main.go" ]
