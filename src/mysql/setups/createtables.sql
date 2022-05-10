@@ -102,3 +102,6 @@ CREATE TABLE nice (
     FOREIGN KEY (user_uid) REFERENCES user(uid) ON DELETE CASCADE,
     FOREIGN KEY (quest_id) REFERENCES quest(id) ON DELETE CASCADE
 );
+
+/* テスト */
+insert user(uid, nickname) values ('icc', 'bo-neko')
