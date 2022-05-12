@@ -10,7 +10,8 @@ func Init() *echo.Echo {
 
 	api := e.Group("/api")
 	{
-		api.GET("/test", controller.GetTest())	
+		api.GET("/test", controller.GetTest())
+		api.GET("/users", controller.GetUser())
 	}
 
 	

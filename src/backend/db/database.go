@@ -1,4 +1,4 @@
-package database
+package db
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 )
 
 // SQLConnect DB接続
-func GormConnect() (database *gorm.DB) {
+func Connect() (database *gorm.DB) {
     // パスワード等を.envファイルから読み取る
     // program > go > .env
     err := godotenv.Load("../../.env")
