@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+    "github.com/go-sql-driver/mysql"
     "github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 )
@@ -12,7 +13,7 @@ import (
 func Connect() (database *gorm.DB) {
     // パスワード等を.envファイルから読み取る
     // program > go > .env
-    err := godotenv.Load("../../.env")
+    err := godotenv.Load("/backend/.env")
     if err != nil {
         panic(err.Error())
     } else {
