@@ -1,10 +1,12 @@
 package controller
 
 import (
-	"net/http"
+  "os"
+  "fmt"
 	
 	"github.com/labstack/echo/v4"
   "github.com/bradrydzewski/go.auth"
+  "github.com/joho/godotenv"
 )
 
 func login() echo.HandlerFunc {
@@ -26,7 +28,7 @@ func login() echo.HandlerFunc {
     auth.Config.CookieSecure = false
 
     twitterCallBack := "/auth/login"
-    twitterHandler = auth.Twitter(API_KEY, API_KEY_SECRET, twitterCallBack)
+    twitterHandler := auth.Twitter(API_KEY, API_KEY_SECRET, twitterCallBack)
 
     return twitterHandler
   }
