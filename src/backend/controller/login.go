@@ -1,6 +1,7 @@
 package controller
 
 import (
+  "net/http"
   "os"
   "fmt"
 	
@@ -30,6 +31,6 @@ func login() echo.HandlerFunc {
     twitterCallBack := "/auth/login"
     twitterHandler := auth.Twitter(API_KEY, API_KEY_SECRET, twitterCallBack)
 
-    return twitterHandler
+    return c.Handler(http.StatusOK, twitterHandler)
   }
 }
