@@ -16,7 +16,8 @@ func GetUser() echo.HandlerFunc {
 		var user []model.User
     	db.Raw("SELECT * FROM user").Scan(&user)
 
-		return c.String(http.StatusOK, "sikatanai")
+		// return c.String(http.StatusOK, "sikatanai")
     	// return c.XML(http.StatusCreated, user)
+		return c.JSON(http.StatusCreated, user)
   	}
 }
