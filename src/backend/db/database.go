@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+    _ "github.com/go-sql-driver/mysql"
     "github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 )
@@ -20,12 +21,12 @@ func Connect() (database *gorm.DB) {
     }
 
     DBMS := "mysql"                   // MySQL
-    PROTOCOL := "tcp(localhost:3306)" // db:3306
+    HOST := "tcp(db_container)" // db:3306
     DBNAME := os.Getenv("MYSQL_DATABASE")    // テーブル名
     USER := os.Getenv("MYSQL_USER")      // MySQLユーザー名
     PASS := os.Getenv("MYSQL_USER_PASSWORD")  // パスワード
 
-    CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
+    CONNECT := USER + ":" + PASS + "@" + HOST + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
     db, err := gorm.Open(DBMS, CONNECT)
     if err != nil {
         panic(err.Error())
