@@ -5,6 +5,5 @@ import (
 )
 
 func main() {
-	e := route.Init()
-	e.Logger.Fatal(e.Start(":3000"))
+	route.Init()
 }
