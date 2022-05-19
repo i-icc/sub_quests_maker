@@ -1,24 +1,23 @@
 package route
 
 import (
-	"backend/controller"
 	"net/http"
+	"log"
+
+	"backend/controller"
 )
 
 func Init() {
+	http.HandleFunc("/", controller.GetTest)
 
+	http.HandleFunc("/api/test", controller.GetTest)
+	http.HandleFunc("/api/usertest", controller.GetUserTest)
 
-	api := e.Group("/api")
-	{
-		api.GET("/test", controller.GetTest())
-		api.GET("/users", controller.GetUser())
-	}
-	auth := e.Group("/auth")
-	{
-		auth.GET("/login", controller.Login())
-		// auth.GET("/logout", controller.Logout())
-		// auth.GET("/signup", controller.Signout())
-	}
+	http.Handle("/auth/login", controller.Login())
+	http.HandleFunc("/auth/logout", controller.Logout)
 
-	return e
+	err := http.ListenAndServe(":3000", nil)
+    if err != nil {
+        log.Fatal("ListenAndServe: ", err)
+    }
 }

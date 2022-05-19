@@ -2,12 +2,9 @@ package controller
 
 import (
 	"net/http"
-	
-	"github.com/labstack/echo/v4"
+  "fmt"
 )
 
-func GetTest() echo.HandlerFunc {
-  return func(c echo.Context) error {
-    return c.String(http.StatusOK, "Hello, World!")
-  }
+func GetTest(w http.ResponseWriter, r *http.Request) {
+  fmt.Fprintf(w, "test") //ここでwに入るものがクライアントに出力されます。
 }

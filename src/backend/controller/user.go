@@ -2,20 +2,31 @@ package controller
 
 import (
 	"net/http"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"log"
 
 	"backend/db"
 	"backend/model"
-	"github.com/labstack/echo/v4"
 )
 
-func GetUser() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		db := db.Connect()
-		defer db.Close()
+func GetUserTest(w http.ResponseWriter, r *http.Request){
+	db := db.Connect()
+	defer db.Close()
 
-		var user []model.User
-    	db.Raw("SELECT * FROM user").Scan(&user)
-		
-		return c.JSON(http.StatusCreated, user)
-  	}
+	var user []model.User
+    db.Raw("SELECT * FROM user").Scan(&user)
+
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	if err := enc.Encode(&user); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(buf.String())
+
+	_, err := fmt.Fprint(w, buf.String())
+	if err != nil {
+		return
+	}
 }
