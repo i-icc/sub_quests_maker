@@ -2,11 +2,11 @@ package route
 
 import (
 	"backend/controller"
-	"github.com/labstack/echo/v4"
+	"net/http"
 )
 
-func Init() *echo.Echo {
-	e := echo.New()
+func Init() {
+
 
 	api := e.Group("/api")
 	{
@@ -20,6 +20,5 @@ func Init() *echo.Echo {
 		// auth.GET("/signup", controller.Signout())
 	}
 
-	
 	return e
 }
