@@ -2,9 +2,10 @@ package main
 
 import (
 	"backend/route"
+	"log"
 )
 
 func main() {
 	e := route.Init()
-	e.Logger.Fatal(e.Start(":3000"))
+	log.Fatal(http.ListenAndServe(":3000", e))
 }
