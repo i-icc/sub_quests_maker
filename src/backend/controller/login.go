@@ -1,7 +1,7 @@
 package controller
 
 import (
-  "net/http"
+  _ "net/http"
   "os"
   "fmt"
 	
@@ -10,7 +10,7 @@ import (
   "github.com/joho/godotenv"
 )
 
-func login() echo.HandlerFunc {
+func Login() echo.HandlerFunc {
   return func(c echo.Context) error {
     // keyを .envファイルから読み取る
     err := godotenv.Load("/backend/.env")
@@ -24,13 +24,13 @@ func login() echo.HandlerFunc {
     API_KEY_SECRET := os.Getenv("API_KEY_SECRET")
 
     // set the auth parameters
-	  auth.Config.CookieSecret = []byte("7H9xiimk2QdTdYI7rDddfJeV")
+    auth.Config.CookieSecret = []byte("7H9xiimk2QdTdYI7rDddfJeV")
     auth.Config.LoginSuccessRedirect = "/api/test"
     auth.Config.CookieSecure = false
 
     twitterCallBack := "/auth/login"
     twitterHandler := auth.Twitter(API_KEY, API_KEY_SECRET, twitterCallBack)
 
-    return c.Handler(http.StatusOK, twitterHandler)
+    return twitterHandler
   }
 }
