@@ -35,5 +35,5 @@ func Login() *auth.AuthHandler {
 // logout handler
 func Logout(w http.ResponseWriter, r *http.Request) {
 	auth.DeleteUserCookie(w, r)
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/api/usertest", http.StatusSeeOther)
 }

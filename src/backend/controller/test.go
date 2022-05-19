@@ -6,5 +6,11 @@ import (
 )
 
 func GetTest(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprintf(w, "test") //ここでwに入るものがクライアントに出力されます。
+  // fmt.Fprintf(w, "test") //ここでwに入るものがクライアントに出力されます。
+
+  fmt.Println(r.URL.User)
+  fmt.Println(r)
+
+  user := r.URL.User.Username()
+	fmt.Fprintf(w, user)
 }

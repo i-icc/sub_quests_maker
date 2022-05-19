@@ -5,10 +5,11 @@ import (
 	"log"
 
 	"backend/controller"
+	"github.com/bradrydzewski/go.auth"
 )
 
 func Init() {
-	http.HandleFunc("/", controller.GetTest)
+	http.HandleFunc("/", auth.SecureFunc(controller.GetTest))
 
 	http.HandleFunc("/api/test", controller.GetTest)
 	http.HandleFunc("/api/usertest", controller.GetUserTest)
