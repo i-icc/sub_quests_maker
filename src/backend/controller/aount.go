@@ -29,7 +29,7 @@ func Login() *auth.AuthHandler {
   twitterCallBack := "http://localhost:3000/auth/login"
   twitterHandler := auth.Twitter(API_KEY, API_KEY_SECRET, twitterCallBack)
 
-  return twitterHandler
+  return twitterHandler.GetAuthenticatedUser()
 }
 
 // logout handler
