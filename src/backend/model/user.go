@@ -10,4 +10,5 @@ type User struct {
 	Id int `json:"id" xml:"id"`
     Uid string `json:"uid" xml:"uid"`
     Nickname string `json:"nickname" xml:"nickname"`
+    Image string `json:"image" xml:"image"`
 }

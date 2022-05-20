@@ -18,6 +18,7 @@ CREATE TABLE user (
     id int NOT NULL AUTO_INCREMENT,
     uid char(50) NOT NULL UNIQUE,
     nickname char(50) NOT NULL,
+    image char(150),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
