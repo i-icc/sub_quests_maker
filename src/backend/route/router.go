@@ -9,12 +9,12 @@ import (
 )
 
 func Init() {
-	http.HandleFunc("/", auth.SecureFunc(controller.GetTest))
+	http.HandleFunc("/", auth.SecureUser(controller.GetTest))
 
-	http.HandleFunc("/api/test", controller.GetTest)
+	// http.HandleFunc("/api/test", controller.GetTest)
 	http.HandleFunc("/api/usertest", controller.GetUserTest)
 
-	http.Handle("/auth/login", controller.Login)
+	http.Handle("/auth/login", controller.Login())
 	http.HandleFunc("/auth/logout", controller.Logout)
 
 	err := http.ListenAndServe(":3000", nil)
