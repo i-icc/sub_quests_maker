@@ -2,10 +2,10 @@ package controller
 
 import (
 	"net/http"
-	"bytes"
+	_ "bytes"
 	"encoding/json"
 	"fmt"
-	"log"
+	_ "log"
 
 	"backend/db"
 	"backend/model"
@@ -18,15 +18,10 @@ func GetUserTest(w http.ResponseWriter, r *http.Request){
 	var user []model.User
     db.Raw("SELECT * FROM user").Scan(&user)
 
-	var buf bytes.Buffer
-	enc := json.NewEncoder(&buf)
-	if err := enc.Encode(&user); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(buf.String())
-
-	_, err := fmt.Fprint(w, buf.String())
+	j, err := json.Marshal(user)
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
+	fmt.Fprintf(w, string(j))
 }
