@@ -14,7 +14,7 @@ func Init() {
 	http.HandleFunc("/api/test", controller.GetTest)
 	http.HandleFunc("/api/usertest", controller.GetUserTest)
 
-	http.HandleFunc("/auth/login", controller.Login)
+	http.Handle("/auth/login", controller.Login)
 	http.HandleFunc("/auth/logout", controller.Logout)
 
 	err := http.ListenAndServe(":3000", nil)
