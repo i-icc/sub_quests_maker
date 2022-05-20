@@ -8,12 +8,21 @@ import (
   "github.com/bradrydzewski/go.auth"
 )
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func Siginup(w http.ResponseWriter, r *http.Request) {
   token := r.FormValue("oauth_token")
   if token != ""{
-    // fmt.Println("oauth_token:", token)
+  }
+}
+
+func Login(w http.ResponseWriter, r *http.Request) {
+  oauth_token := r.FormValue("oauth_token")
+  oauth_verifier := r.FormValue("oauth_verifier")
+  if oauth_token != "" && oauth_verifier != "" {
+    fmt.Println(GetAccessToken(oauth_token, oauth_verifier))
+
     data := map[string]interface{}{
-      "token": token,
+      "oauth_token": oauth_token,
+      "oauth_verifier": oauth_verifier,
     }
     j, err := json.Marshal(data)
     if err != nil {
@@ -21,9 +30,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
       return
     }
     fmt.Fprintf(w, string(j))
-    return
+    
+    // GetAcount(token)
   } else {
-    http.Redirect(w, r, "/auth/accese", http.StatusSeeOther)
+    http.Redirect(w, r, "/auth/access", http.StatusSeeOther)
   }
 }
 

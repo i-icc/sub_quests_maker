@@ -14,7 +14,7 @@ func Init() {
 	// http.HandleFunc("/api/test", controller.GetTest)
 	http.HandleFunc("/api/usertest", controller.GetUserTest)
 
-	http.Handle("/auth/accese", controller.Accese())
+	http.Handle("/auth/access", controller.Access())
 	http.HandleFunc("/auth/login", controller.Login)
 	http.HandleFunc("/auth/logout", controller.Logout)
 
