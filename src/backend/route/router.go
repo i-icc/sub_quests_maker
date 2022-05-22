@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"log"
 
-	_ "backend/controller"
+	"backend/controller"
 	"backend/oauth"
 	_ "github.com/bradrydzewski/go.auth"
 )
@@ -13,7 +13,7 @@ func Init() {
 	// http.HandleFunc("/", auth.SecureUser(controller.GetTest))
 
 	// http.HandleFunc("/api/test", controller.GetTest)
-	// http.HandleFunc("/api/usertest", controller.GetUserTest)
+	http.HandleFunc("/api/usertest", controller.GetUserTest)
 
 	o := oauth.Oauth{}
 	o.SetUp()

@@ -18,7 +18,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
   oauth_token := r.FormValue("oauth_token")
   oauth_verifier := r.FormValue("oauth_verifier")
   if oauth_token != "" && oauth_verifier != "" {
-    fmt.Println(GetAccessToken(oauth_token, oauth_verifier))
+    // fmt.Println(GetAccessToken(oauth_token, oauth_verifier))
 
     data := map[string]interface{}{
       "oauth_token": oauth_token,

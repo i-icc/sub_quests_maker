@@ -14,7 +14,7 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"backend/contloer"
+	_ "backend/controller"
 )
 
 const (

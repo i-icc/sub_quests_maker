@@ -1,7 +1,7 @@
 package controller
 
 import (
-  "os"
+  _ "os"
   "fmt"
   "net/http"
   _ "encoding/json"
@@ -9,8 +9,6 @@ import (
   _ "strings"
   
   _ "backend/model"
-	
-  "github.com/bradrydzewski/go.auth"
 )
 
 func GetAcount(token string) { //model.User {
