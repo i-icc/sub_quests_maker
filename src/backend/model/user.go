@@ -7,8 +7,7 @@ import (
 type User struct {
     gorm.Model
     //`json:"--"`はリクエストボディに指定する名前
-	Id int `json:"id" xml:"id"`
-    Uid string `json:"uid" xml:"uid"`
-    Nickname string `json:"nickname" xml:"nickname"`
-    Image string `json:"image" xml:"image"`
+    Uid string `json:"username" xml:"username"`
+    Nickname string `json:"name" xml:"name"`
+    Image string `json:"profile_image_url" xml:"profile_image_url"`
 }

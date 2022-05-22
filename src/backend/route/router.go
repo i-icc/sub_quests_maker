@@ -15,13 +15,12 @@ func Init() {
 	// http.HandleFunc("/api/test", controller.GetTest)
 	http.HandleFunc("/api/usertest", controller.GetUserTest)
 
+	oauth.Init()
 	o := oauth.Oauth{}
 	o.SetUp()
 	http.HandleFunc("/auth/login", o.Login)
 	http.HandleFunc("/auth/callback", o.Callback)
-	// http.Handle("/auth/access", controller.Access())
-	// http.HandleFunc("/auth/login", controller.Login)
-	// http.HandleFunc("/auth/logout", controller.Logout)
+	http.HandleFunc("/auth/logout", o.Logout)
 
 	err := http.ListenAndServe(":3000", nil)
     if err != nil {

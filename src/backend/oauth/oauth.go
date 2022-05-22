@@ -16,7 +16,8 @@ import (
 
 	"github.com/joho/godotenv"
 
-	_ "backend/controller"
+	"backend/controller"
+	_ "backend/model"
 )
 
 const (
@@ -77,6 +78,30 @@ func (oauth *Oauth) Login(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, authEndpoint+values.Encode(), 302)
 }
 
+func (oauth *Oauth) Logout(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("tokenId")
+	if err != nil {
+		 log.Fatal("Cookie: ", err)
+		 return
+	}
+	tokenId := cookie.Value
+	if (! mg.Exists(tokenId)) {
+		return
+	}
+	mg.Destroy(tokenId)
+	c := &http.Cookie{
+		Name:   "tokenId",
+		Value: 	"",
+		Path: 	"/",
+	}
+	http.SetCookie(w, c)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+// func (oauth *Oauth) Siginup(w http.ResponseWriter, r *http.Request) {
+// 	
+// }
+
 func (oauth *Oauth) Callback(w http.ResponseWriter, r *http.Request) {
 
 	query := r.URL.Query()
@@ -89,15 +114,23 @@ func (oauth *Oauth) Callback(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	j, err := json.Marshal(result)
-	if err != nil {
-		log.Println(err)
+
+	fmt.Fprintf(w, result["access_token"])
+
+	u := controller.GetAcount(result["access_token"])
+	t := NewToken(result["access_token"], u.Uid)
+	mg.Save(t)
+	c := &http.Cookie{
+		Name:   "tokenId",
+		Value: 	t.id,
+		Path: 	"/",
 	}
-	fmt.Fprintf(w, string(j))
+	http.SetCookie(w, c)
+	
+	fmt.Fprintf(w, t.id)
 }
 
-// 認可コードを使ってトークンリクエストをエンドポイントに送る
-func (oauth *Oauth) tokenRequest(query url.Values) (map[string]interface{}, error) {
+func (oauth *Oauth) tokenRequest(query url.Values) (map[string]string, error) {
 
 	tokenEndpoint := oauth.tokenEndpoint
 	values := url.Values{}
@@ -127,7 +160,8 @@ func (oauth *Oauth) tokenRequest(query url.Values) (map[string]interface{}, erro
 	}
 
 	// log.Printf("token response : %s", string(body))
-	var data map[string]interface{}
+	// var data map[string]interface{}
+	var data map[string]string
 	json.Unmarshal(body, &data)
 
 	return data, nil
