@@ -5,12 +5,14 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"strings"
 	"os"
+	"crypto/rand"
 
 	"github.com/joho/godotenv"
 
@@ -48,7 +50,7 @@ func (oauth *Oauth) SetUp() {
 	oauth.clientSecret = os.Getenv("CLIENT_SECRET")
 	oauth.authEndpoint = "https://twitter.com/i/oauth2/authorize?"
 	oauth.tokenEndpoint = "https://api.twitter.com/2/oauth2/token"
-	oauth.state = "abc" // ここはランダムに
+	oauth.state = createRandomState()
 	oauth.scope = "tweet.read tweet.write users.read offline.access"
 	oauth.code_challenge_method = "S256"
 	oauth.code_challenge = base64URLEncode()
@@ -124,9 +126,17 @@ func (oauth *Oauth) tokenRequest(query url.Values) (map[string]interface{}, erro
 		return nil, err
 	}
 
-	log.Printf("token response : %s", string(body))
+	// log.Printf("token response : %s", string(body))
 	var data map[string]interface{}
 	json.Unmarshal(body, &data)
 
 	return data, nil
+}
+
+func createRandomState() string {
+	b := make([]byte, 64)
+    if _, err := io.ReadFull(rand.Reader, b); err != nil {
+        return ""
+    }
+    return base64.URLEncoding.EncodeToString(b)
 }
