@@ -86,14 +86,21 @@ func (oauth *Oauth) Logout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tokenId := cookie.Value
-	cookie.MaxAge = -1
-	http.SetCookie(w, cookie)
+
+	c := http.Cookie{
+		Name:   "tokenId",
+		MaxAge: -1,
+		Path:   "/",
+	}
+	http.SetCookie(w, &c)
+
 	if !mg.Exists(tokenId) {
 		fmt.Println("Not Found Session")
 		http.Redirect(w, r, "/auth/login", http.StatusBadRequest)
 	}
 	mg.Destroy(tokenId)
-	// http.Redirect(w, r, "/api/usertest", http.StatusSeeOther)
+
+	http.Redirect(w, r, "/api/usertest", http.StatusSeeOther)
 }
 
 // func (oauth *Oauth) Siginup(w http.ResponseWriter, r *http.Request) {
@@ -114,21 +121,23 @@ func (oauth *Oauth) Callback(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	fmt.Fprintf(w, result["access_token"])
+	// fmt.Fprintf(w, result["access_token"])
 
 	u := controller.GetAcount(result["access_token"])
 	t := NewToken(result["access_token"], u.Uid)
-	t.id = "abc"
 	log.Println(t.id, t.uid, t.token)
 	mg.Save(t)
+
 	c := http.Cookie{
 		Name:   "tokenId",
 		Value:  t.id,
 		MaxAge: 60 * 60 * 24,
+		Path:   "/",
 	}
 	http.SetCookie(w, &c)
 
 	fmt.Fprintf(w, t.id)
+	// http.Redirect(w, r, "/api/cookie/check", http.StatusSeeOther)
 }
 
 func (oauth *Oauth) tokenRequest(query url.Values) (map[string]string, error) {
