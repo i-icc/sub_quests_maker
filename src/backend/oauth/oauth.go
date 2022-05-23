@@ -1,6 +1,7 @@
 package oauth
 
 import (
+	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
@@ -10,9 +11,8 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"strings"
 	"os"
-	"crypto/rand"
+	"strings"
 
 	"github.com/joho/godotenv"
 
@@ -41,13 +41,13 @@ type Oauth struct {
 
 func (oauth *Oauth) SetUp() {
 	err := godotenv.Load("/backend/.env")
-    if err != nil {
-        panic(err.Error())
-    } else {
-        fmt.Println("env読み取り成功")
-    }
-	
-	oauth.clientId =  os.Getenv("CLIENT_ID")
+	if err != nil {
+		panic(err.Error())
+	} else {
+		fmt.Println("env読み取り成功")
+	}
+
+	oauth.clientId = os.Getenv("CLIENT_ID")
 	oauth.clientSecret = os.Getenv("CLIENT_SECRET")
 	oauth.authEndpoint = "https://twitter.com/i/oauth2/authorize?"
 	oauth.tokenEndpoint = "https://api.twitter.com/2/oauth2/token"
@@ -81,25 +81,25 @@ func (oauth *Oauth) Login(w http.ResponseWriter, r *http.Request) {
 func (oauth *Oauth) Logout(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("tokenId")
 	if err != nil {
-		 log.Fatal("Cookie: ", err)
-		 return
+		log.Fatal("Cookie: ", err)
+		return
 	}
 	tokenId := cookie.Value
-	if (! mg.Exists(tokenId)) {
+	if !mg.Exists(tokenId) {
 		return
 	}
 	mg.Destroy(tokenId)
 	c := &http.Cookie{
-		Name:   "tokenId",
-		Value: 	"",
-		Path: 	"/",
+		Name:  "tokenId",
+		Value: "",
+		Path:  "/",
 	}
 	http.SetCookie(w, c)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 // func (oauth *Oauth) Siginup(w http.ResponseWriter, r *http.Request) {
-// 	
+//
 // }
 
 func (oauth *Oauth) Callback(w http.ResponseWriter, r *http.Request) {
@@ -108,6 +108,7 @@ func (oauth *Oauth) Callback(w http.ResponseWriter, r *http.Request) {
 	if query.Get("state") != oauth.state {
 		w.WriteHeader(403)
 		w.Write([]byte("status error"))
+		return
 	}
 
 	result, err := oauth.tokenRequest(query)
@@ -121,12 +122,12 @@ func (oauth *Oauth) Callback(w http.ResponseWriter, r *http.Request) {
 	t := NewToken(result["access_token"], u.Uid)
 	mg.Save(t)
 	c := &http.Cookie{
-		Name:   "tokenId",
-		Value: 	t.id,
-		Path: 	"/",
+		Name:  "tokenId",
+		Value: t.id,
+		Path:  "/",
 	}
 	http.SetCookie(w, c)
-	
+
 	fmt.Fprintf(w, t.id)
 }
 
@@ -169,8 +170,8 @@ func (oauth *Oauth) tokenRequest(query url.Values) (map[string]string, error) {
 
 func createRandomState() string {
 	b := make([]byte, 64)
-    if _, err := io.ReadFull(rand.Reader, b); err != nil {
-        return ""
-    }
-    return base64.URLEncoding.EncodeToString(b)
+	if _, err := io.ReadFull(rand.Reader, b); err != nil {
+		return ""
+	}
+	return base64.URLEncoding.EncodeToString(b)
 }
