@@ -21,7 +21,7 @@ func NewToken(t string, u string) *Token {
 }
 
 func createId() string {
-	b := make([]byte, 64)
+	b := make([]byte, 60)
 	if _, err := io.ReadFull(rand.Reader, b); err != nil {
 		return ""
 	}
