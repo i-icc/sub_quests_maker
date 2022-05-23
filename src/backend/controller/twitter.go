@@ -1,14 +1,14 @@
 package controller
 
 import (
-  _ "os"
-  "fmt"
-  "net/http"
-  "encoding/json"
-  "io/ioutil"
-  _ "strings"
-  
-  "backend/model"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	_ "os"
+	_ "strings"
+
+	"backend/model"
 )
 
 func GetAcount(token string) model.User {
@@ -23,7 +23,7 @@ func GetAcount(token string) model.User {
 		panic(err.Error())
 	}
 	byteArray, _ := ioutil.ReadAll(resp.Body)
-  	fmt.Println(string(byteArray))
+	fmt.Println(string(byteArray))
 
 	var data map[string]model.User
 	if err := json.Unmarshal([]byte(string(byteArray)), &data); err != nil {
