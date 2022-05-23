@@ -1,9 +1,9 @@
 package oauth
- 
+
 type Manager struct {
-    tokens map[string]*Token
+	tokens map[string]*Token
 }
- 
+
 var mg Manager
 
 func Init() {
@@ -11,16 +11,16 @@ func Init() {
 }
 
 func (m *Manager) Save(token *Token) string {
-    m.tokens[token.id] = token
-	
+	m.tokens[token.id] = token
+
 	return token.id
 }
- 
+
 func (m *Manager) Exists(tokenId string) bool {
-    _, r := m.tokens[tokenId]
-    return r
+	_, r := m.tokens[tokenId]
+	return r
 }
 
 func (m *Manager) Destroy(tokenId string) {
-    delete(m.tokens, tokenId)
+	delete(m.tokens, tokenId)
 }

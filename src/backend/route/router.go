@@ -1,11 +1,12 @@
 package route
 
 import (
-	"net/http"
 	"log"
+	"net/http"
 
 	"backend/controller"
 	"backend/oauth"
+
 	_ "github.com/bradrydzewski/go.auth"
 )
 
@@ -23,8 +24,7 @@ func Init() {
 	http.HandleFunc("/auth/logout", o.Logout)
 
 	err := http.ListenAndServe(":3000", nil)
-    if err != nil {
-        log.Fatal("ListenAndServe: ", err)
-    }
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
 }
-
