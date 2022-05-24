@@ -15,10 +15,7 @@ func Init() {
 
 	// http.HandleFunc("/api/test", controller.GetTest)
 	http.HandleFunc("/api/usertest", controller.GetUserTest)
-
-	http.HandleFunc("/api/cookie/set", controller.SetCookie)
-	http.HandleFunc("/api/cookie/check", controller.ShowCookie)
-	http.HandleFunc("/api/cookie/delete", controller.DeleteCookie)
+	http.HandleFunc("/api/quest", controller.CreateQuest)
 
 	oauth.Init()
 	o := oauth.Oauth{}
