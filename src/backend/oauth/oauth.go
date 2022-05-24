@@ -124,6 +124,10 @@ func (oauth *Oauth) Callback(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintf(w, result["access_token"])
 
 	u := controller.GetAcount(result["access_token"])
+	if !controller.CheckExsistUser(u) {
+		controller.ResistUser(u)
+	}
+
 	t := NewToken(result["access_token"], u.Uid)
 	log.Println(t.id, t.uid, t.token)
 	mg.Save(t)
