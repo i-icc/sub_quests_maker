@@ -32,7 +32,7 @@ func CheckExsistUser(u model.User) bool {
 	defer db.Close()
 
 	var user []model.User
-	db.Raw("SELECT * FROM user WHERE uid = ? LIMIT 1", u.Uid).Scan(&user)
+	db.Raw("SELECT * FROM users WHERE uid = ? LIMIT 1", u.Uid).Scan(&user)
 
 	var result bool
 	if len(user) == 1 {
