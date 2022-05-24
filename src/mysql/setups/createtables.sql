@@ -1,20 +1,20 @@
-DROP TABLE comment;
+DROP TABLE comments;
 
-DROP TABLE nice;
+DROP TABLE nices;
 
-DROP TABLE quest;
+DROP TABLE quests;
 
-DROP TABLE user;
+DROP TABLE users;
 
-DROP TABLE who;
+DROP TABLE whos;
 
-DROP TABLE timing;
+DROP TABLE timings;
 
-DROP TABLE place;
+DROP TABLE places;
 
-DROP TABLE what;
+DROP TABLE whats;
 
-CREATE TABLE user (
+CREATE TABLE users (
     id int NOT NULL AUTO_INCREMENT,
     uid char(50) NOT NULL UNIQUE,
     nickname char(50) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE user (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE who (
+CREATE TABLE whos (
     id int NOT NULL AUTO_INCREMENT,
     instruction char(50) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -34,7 +34,7 @@ CREATE TABLE who (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE timing (
+CREATE TABLE timings (
     id int NOT NULL AUTO_INCREMENT,
     instruction char(100) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE timing (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE place (
+CREATE TABLE places (
     id int NOT NULL AUTO_INCREMENT,
     instruction char(100) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -52,7 +52,7 @@ CREATE TABLE place (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE what (
+CREATE TABLE whats (
     id int NOT NULL AUTO_INCREMENT,
     instruction char(100) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -61,7 +61,7 @@ CREATE TABLE what (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE quest (
+CREATE TABLE quests (
     id int NOT NULL AUTO_INCREMENT,
     user_uid char(50) NOT NULL,
     who_id int,
@@ -73,14 +73,14 @@ CREATE TABLE quest (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_uid) REFERENCES user(uid) ON DELETE CASCADE,
-    FOREIGN KEY (who_id) REFERENCES who(id) ON DELETE CASCADE,
-    FOREIGN KEY (timing_id) REFERENCES timing(id) ON DELETE CASCADE,
-    FOREIGN KEY (place_id) REFERENCES place(id) ON DELETE CASCADE,
-    FOREIGN KEY (what_id) REFERENCES what(id) ON DELETE CASCADE
+    FOREIGN KEY (user_uid) REFERENCES users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (who_id) REFERENCES whos(id) ON DELETE CASCADE,
+    FOREIGN KEY (timing_id) REFERENCES timings(id) ON DELETE CASCADE,
+    FOREIGN KEY (place_id) REFERENCES places(id) ON DELETE CASCADE,
+    FOREIGN KEY (what_id) REFERENCES whats(id) ON DELETE CASCADE
 );
 
-CREATE TABLE comment (
+CREATE TABLE comments (
     id int NOT NULL AUTO_INCREMENT,
     user_uid char(50) NOT NULL,
     quest_id int NOT NULL,
@@ -89,20 +89,20 @@ CREATE TABLE comment (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_uid) REFERENCES user(uid) ON DELETE CASCADE,
-    FOREIGN KEY (quest_id) REFERENCES quest(id) ON DELETE CASCADE
+    FOREIGN KEY (user_uid) REFERENCES users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (quest_id) REFERENCES quests(id) ON DELETE CASCADE
 );
 
-CREATE TABLE nice (
+CREATE TABLE nices (
     user_uid char(50) NOT NULL,
     quest_id int NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
     PRIMARY KEY (user_uid, quest_id),
-    FOREIGN KEY (user_uid) REFERENCES user(uid) ON DELETE CASCADE,
-    FOREIGN KEY (quest_id) REFERENCES quest(id) ON DELETE CASCADE
+    FOREIGN KEY (user_uid) REFERENCES users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (quest_id) REFERENCES quests(id) ON DELETE CASCADE
 );
 
 /* テスト */
-insert user(uid, nickname) values ('icc', 'bo-neko')
+insert users(uid, nickname) values ('icc', 'bo-neko')
