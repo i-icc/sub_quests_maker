@@ -1,3 +1,0 @@
-mysql -u root -p
-create user ユーザー名@localhost identified by 'パスワード';
-GRANT ALL ON db名.* TO ユーザー名@localhost;
