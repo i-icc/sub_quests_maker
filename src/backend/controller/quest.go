@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	"backend/db"
-	"backend/model"
 )
 
 func CreateQuest(w http.ResponseWriter, r *http.Request) {
@@ -44,7 +43,13 @@ func CreateQuest(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetRandomInstruction(table string) interface{} {
-	return model.User{}
+	type Result struct {
+		Id          string
+		Instruction string
+	}
+	result := Result{}
+
+	return result
 }
 
 // func ResistQuest(u model.Quest) {
