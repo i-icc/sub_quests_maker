@@ -14,6 +14,12 @@ func CreateQuest(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		var params map[string]bool
+		param2table := map[string]string{
+			"when":  "timings",
+			"where": "places",
+			"who":   "whos",
+			"what":  "whats",
+		}
 
 		params["when"] = r.FormValue("when") == "on"
 		params["where"] = r.FormValue("where") == "on"
@@ -21,16 +27,19 @@ func CreateQuest(w http.ResponseWriter, r *http.Request) {
 		params["what"] = r.FormValue("what") == "on"
 
 		if !params["what"] {
-			fmt.Fprintf(w, "")
+			fmt.Fprintf(w, "必須パラメーが無いで")
 			return
 		}
 
-		db := db.Connect()
-		defer db.Close()
+		var quest []interface{}
 
-		var user []interface{}
+		for k, v := range param2table {
+			if params[k] {
+				quest = append(quest, GetRandomInstruction(v))
+			}
+		}
 
-		j, err := json.Marshal(user)
+		j, err := json.Marshal(quest)
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -44,10 +53,17 @@ func CreateQuest(w http.ResponseWriter, r *http.Request) {
 
 func GetRandomInstruction(table string) interface{} {
 	type Result struct {
-		Id          string
-		Instruction string
+		Tag         string `json:"tag"`
+		Id          string `json:"id"`
+		Instruction string `json:"instruction"`
 	}
-	result := Result{}
+
+	db := db.Connect()
+	defer db.Close()
+
+	var result Result
+	db.Raw("SELECT * FROM ? ORDER BY RAND() LIMIT 1;", table).Scan(&result)
+	result.Tag = table
 
 	return result
 }
