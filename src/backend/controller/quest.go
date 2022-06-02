@@ -53,6 +53,11 @@ func CreateQuest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func ResistQuest(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Fprintf(w, "a")
+}
+
 func GetRandomInstruction(table string) interface{} {
 	type Result struct {
 		Tag         string `json:"tag"`
@@ -70,7 +75,7 @@ func GetRandomInstruction(table string) interface{} {
 	return result
 }
 
-func ResistQuest(u model.Quest) {
+func resistQuest(u model.Quest) {
 	db := db.Connect()
 	defer db.Close()
 
