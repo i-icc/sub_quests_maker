@@ -17,7 +17,7 @@ func GetUserTest(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	var user []model.User
-	db.Raw("SELECT * FROM user").Scan(&user)
+	db.Raw("SELECT * FROM users").Scan(&user)
 
 	j, err := json.Marshal(user)
 	if err != nil {
