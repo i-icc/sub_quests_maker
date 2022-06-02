@@ -4,10 +4,12 @@ import (
 	_ "bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	_ "log"
 	"net/http"
 
 	"backend/db"
+	"backend/model"
 )
 
 func CreateQuest(w http.ResponseWriter, r *http.Request) {
@@ -68,16 +70,16 @@ func GetRandomInstruction(table string) interface{} {
 	return result
 }
 
-// func ResistQuest(u model.Quest) {
-// 	db := db.Connect()
-// 	defer db.Close()
+func ResistQuest(u model.Quest) {
+	db := db.Connect()
+	defer db.Close()
 
-// 	db.Create(&u)
+	db.Create(&u)
 
-// 	j, err := json.Marshal(u)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
-// 	log.Print(string(j))
-// }
+	j, err := json.Marshal(u)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	log.Print(string(j))
+}
