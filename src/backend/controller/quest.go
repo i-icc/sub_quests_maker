@@ -1,12 +1,11 @@
 package controller
 
 import (
-	_ "bytes"
 	"encoding/json"
 	"fmt"
 	"log"
-	_ "log"
 	"net/http"
+	"strconv"
 
 	"backend/db"
 	"backend/model"
@@ -48,20 +47,37 @@ func CreateQuest(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fmt.Fprintf(w, string(j))
+	case "POST":
+		cookie, err := r.Cookie("tokenId")
+		if err != nil {
+			fmt.Println("Cookie: ", err)
+			fmt.Fprintf(w, "ログインし直してください")
+			return
+		}
+		fmt.Print(cookie.Value)
+		// tokenId := cookie.Value
+		// if !tokens.mg.Exists(tokenId) {
+		// 	fmt.Fprintf(w, "ログインし直してください")
+		// 	return
+		// }
+
+		var u model.Quest
+
+		u.When_id, _ = strconv.Atoi(r.FormValue("timings"))
+		u.Where_id, _ = strconv.Atoi(r.FormValue("places"))
+		u.Who_id, _ = strconv.Atoi(r.FormValue("whos"))
+		u.What_id, _ = strconv.Atoi(r.FormValue("whats"))
+
+		fmt.Fprintf(w, "a")
 	default:
 		fmt.Fprintf(w, "Method not allowd")
 	}
 }
 
-func ResistQuest(w http.ResponseWriter, r *http.Request) {
-
-	fmt.Fprintf(w, "a")
-}
-
 func GetRandomInstruction(table string) interface{} {
 	type Result struct {
 		Tag         string `json:"tag"`
-		Id          string `json:"id"`
+		Id          int    `json:"id"`
 		Instruction string `json:"instruction"`
 	}
 

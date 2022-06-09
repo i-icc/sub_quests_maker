@@ -6,11 +6,11 @@ import (
 
 type Quest struct {
 	gorm.Model
-	Id       string `json:"id"`
+	Id       int    `json:"id"`
 	User_uid string `json:"user_uid"`
-	Who_id   string `json:"who_id"`
-	Where_id string `json:"where_id"`
-	What_id  string `json:"what_id"`
-	When_id  string `json:"when_id"`
+	Who_id   int    `json:"who_id"`
+	Where_id int    `json:"where_id"`
+	What_id  int    `json:"what_id"`
+	When_id  int    `json:"when_id"`
 	Comment  string `json:"comment"`
 }
