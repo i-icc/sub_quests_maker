@@ -1,12 +1,10 @@
-package controller
+package twitter
 
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	_ "os"
-	_ "strings"
 
 	"backend/model"
 )

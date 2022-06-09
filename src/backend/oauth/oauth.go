@@ -14,10 +14,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/joho/godotenv"
+	"backend/twitter"
 
-	"backend/controller"
-	_ "backend/model"
+	"github.com/joho/godotenv"
 )
 
 const (
@@ -94,11 +93,11 @@ func (oauth *Oauth) Logout(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, &c)
 
-	if !mg.Exists(tokenId) {
+	if !Mg.Exists(tokenId) {
 		fmt.Println("Not Found Session")
 		http.Redirect(w, r, "/auth/login", http.StatusBadRequest)
 	}
-	mg.Destroy(tokenId)
+	Mg.Destroy(tokenId)
 
 	http.Redirect(w, r, "/api/usertest", http.StatusSeeOther)
 }
@@ -123,14 +122,14 @@ func (oauth *Oauth) Callback(w http.ResponseWriter, r *http.Request) {
 
 	// fmt.Fprintf(w, result["access_token"])
 
-	u := controller.GetAcount(result["access_token"])
-	if !controller.CheckExsistUser(u) {
-		controller.ResistUser(u)
+	u := twitter.GetAcount(result["access_token"])
+	if !CheckExsistUser(u) {
+		ResistUser(u)
 	}
 
 	t := NewToken(result["access_token"], u.Uid)
 	log.Println(t.id, t.uid, t.token)
-	mg.Save(t)
+	Mg.Save(t)
 
 	c := http.Cookie{
 		Name:   "tokenId",

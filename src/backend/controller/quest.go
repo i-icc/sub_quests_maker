@@ -9,6 +9,7 @@ import (
 
 	"backend/db"
 	"backend/model"
+	"backend/oauth"
 )
 
 func CreateQuest(w http.ResponseWriter, r *http.Request) {
@@ -55,20 +56,19 @@ func CreateQuest(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		fmt.Print(cookie.Value)
-		// tokenId := cookie.Value
-		// if !tokens.mg.Exists(tokenId) {
-		// 	fmt.Fprintf(w, "ログインし直してください")
-		// 	return
-		// }
-
+		tokenId := cookie.Value
+		if !oauth.Mg.Exists(tokenId) {
+			fmt.Fprintf(w, "ログインし直してください")
+			return
+		}
 		var u model.Quest
-
+		u.User_uid = oauth.Mg.GetToken(tokenId).GetUid()
 		u.When_id, _ = strconv.Atoi(r.FormValue("timings"))
 		u.Where_id, _ = strconv.Atoi(r.FormValue("places"))
 		u.Who_id, _ = strconv.Atoi(r.FormValue("whos"))
 		u.What_id, _ = strconv.Atoi(r.FormValue("whats"))
 
-		fmt.Fprintf(w, "a")
+		resistQuest(u)
 	default:
 		fmt.Fprintf(w, "Method not allowd")
 	}

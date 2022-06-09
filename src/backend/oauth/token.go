@@ -27,3 +27,11 @@ func createId() string {
 	}
 	return base64.URLEncoding.EncodeToString(b)
 }
+
+func (t *Token) GetUid() string {
+	return t.uid
+}
+
+func (t *Token) GetToken() string {
+	return t.token
+}

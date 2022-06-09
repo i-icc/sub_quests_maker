@@ -4,10 +4,10 @@ type Manager struct {
 	tokens map[string]*Token
 }
 
-var mg Manager
+var Mg Manager
 
 func Init() {
-	mg.tokens = map[string]*Token{}
+	Mg.tokens = map[string]*Token{}
 }
 
 func (m *Manager) Save(token *Token) string {
@@ -23,4 +23,8 @@ func (m *Manager) Exists(tokenId string) bool {
 
 func (m *Manager) Destroy(tokenId string) {
 	delete(m.tokens, tokenId)
+}
+
+func (m *Manager) GetToken(tokenId string) *Token {
+	return m.tokens[tokenId]
 }
